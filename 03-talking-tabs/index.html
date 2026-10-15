@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talking Tabs</title>
+<link rel="stylesheet" href="../shared/style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
+<link rel="icon" id="favicon" href="data:,">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="All sessions">
+      <span class="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
+      <span class="session-no">03</span>
+      <span class="title">My Browser Tabs Are Talking Behind My Back</span>
+    </a>
+    <div class="spacer"></div>
+    <div class="top-actions">
+      <button class="btn ghost" data-notes><span>Notes</span> <kbd>N</kbd></button>
+      <button class="btn ghost" data-present><span>Present</span> <kbd>P</kbd></button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main class="stage" id="stage">
+      <canvas id="cv"></canvas>
+      <div class="me-badge" id="meBadge"><span class="sw"></span><span><small>this tab is</small><b id="meName">…</b></span></div>
+      <div class="count" id="count"><b>1</b><span>tab online</span></div>
+      <div class="empty-hint" id="emptyHint">
+        <div class="eh-title">I'm all alone in here.</div>
+        <button class="btn primary lg" id="spawnHero"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>Open a new window</button>
+      </div>
+      <form class="chatbar" id="chatForm" autocomplete="off">
+        <input type="text" id="chatIn" placeholder="Say something to the other tabs…" maxlength="80">
+        <button class="btn primary" type="submit">Send</button>
+      </form>
+    </main>
+
+    <aside class="side">
+      <section class="card">
+        <h3>Who's online <span class="muted" id="rosterCount"></span></h3>
+        <div class="roster" id="roster"></div>
+      </section>
+
+      <section class="card">
+        <h3>Do something together</h3>
+        <div class="stack">
+          <button class="btn block" id="spawnBtn">Open another window</button>
+          <button class="btn block" id="ballBtn">Throw the ball</button>
+          <button class="btn block" id="flashBtn">Flash every tab</button>
+          <button class="btn block" id="titleBtn">Hijack tab titles</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>The gossip <span class="muted" id="rate">0 msg/s</span></h3>
+        <label class="toggle">Show heartbeats <input type="checkbox" id="showHb"></label>
+        <div class="log" id="log"></div>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<aside class="notes">
+  <button class="btn ghost close" data-notes>Close <kbd>Esc</kbd></button>
+  <span class="kicker">Session 03</span>
+  <h2>My Browser Tabs Are Talking Behind My Back</h2>
+  <h4>Run of show</h4>
+  <ol>
+    <li>Open 3 windows side by side (<kbd>O</kbd>). Links stretch across the gaps.</li>
+    <li>Drag a window around — the links follow it.</li>
+    <li>Turn Wi-Fi off. Still works: no server.</li>
+    <li>Chat, flash, hijack titles. Show the gossip panel.</li>
+    <li>Throw the ball (<kbd>B</kbd>), then close the leader tab — the ball keeps going.</li>
+  </ol>
+  <h4>One-liners</h4>
+  <ul>
+    <li><code>BroadcastChannel</code> = a radio frequency shared by tabs of one site.</li>
+    <li>Heartbeat 20×/s: name, colour, <code>window.screenX/Y</code>.</li>
+    <li>Silent for 1.5 s → presumed dead (failure detection).</li>
+    <li>Oldest tab runs the physics (leader election).</li>
+    <li>Real use: log out everywhere at once; pause the other tab's video.</li>
+  </ul>
+  <h4>Keys</h4>
+  <div class="keys">
+    <kbd>O</kbd><span>Open a window</span>
+    <kbd>B</kbd><span>Throw the ball</span>
+    <kbd>L</kbd><span>Flash all tabs</span>
+    <kbd>T</kbd><span>Hijack titles</span>
+    <kbd>P</kbd><span>Presentation mode</span>
+  </div>
+</aside>
+
+<script type="module" src="app.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# local tooling
+.claude/
+__pycache__/
+*.pyc
+
+# training by-products (the trained weights in weights/ ARE committed)
+01-healing-pixels/weights_backup/
+01-healing-pixels/train/*.log
+*.tmp

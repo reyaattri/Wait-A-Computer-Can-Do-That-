@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Face Into a Math Problem</title>
+<link rel="stylesheet" href="../shared/style.css?v=6">
+<link rel="stylesheet" href="style.css?v=2">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23fff' stroke='%231E293B' stroke-width='2.5'/><path d='M8 20 12 9l5 9 3-6 4 10' fill='none' stroke='%238B5CF6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="All sessions">
+      <span class="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
+      <span class="session-no">05</span>
+      <span class="title">I Turned My Face Into a Math Problem</span>
+    </a>
+    <div class="spacer"></div>
+    <div class="top-actions">
+      <button class="btn ghost" data-notes><span>Notes</span> <kbd>N</kbd></button>
+      <button class="btn ghost" data-present><span>Present</span> <kbd>P</kbd></button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main class="stage dots" id="stage">
+      <ol class="phases" id="phases">
+        <li data-p="photo">Photo</li>
+        <li data-p="dots">Dots</li>
+        <li data-p="path">One line</li>
+        <li data-p="opt">Untangle</li>
+      </ol>
+
+      <div class="paper" id="paper">
+        <canvas id="cv"></canvas>
+        <video id="video" playsinline muted hidden></video>
+        <div class="cam-ui" id="camUi" hidden>
+          <div class="count" id="count"></div>
+          <button class="btn primary lg" id="snapBtn">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="6"/></svg></span>Snap
+          </button>
+        </div>
+      </div>
+
+      <div class="statbar">
+        <div class="st"><span class="k">Dots</span><span class="v" id="sDots">—</span></div>
+        <div class="st"><span class="k">Line length</span><span class="v" id="sLen">—</span></div>
+        <div class="st hot"><span class="k">Shorter than 1st try</span><span class="v" id="sGain">—</span></div>
+        <div class="st"><span class="k">Untangles</span><span class="v" id="sSwaps">—</span></div>
+      </div>
+    </main>
+
+    <aside class="side">
+      <section class="card">
+        <h3><span class="step">1</span>Your picture</h3>
+        <button class="btn block" id="camBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          <span>Take a selfie</span>
+        </button>
+        <div class="drop" id="imgDrop" style="margin-top:10px"><strong>Drop a photo</strong><br>faces with good light work best</div>
+        <div class="samples" id="samples"></div>
+        <div class="field" style="margin-top:14px">
+          <div class="label">Zoom in on the face <output id="zOut"></output></div>
+          <input type="range" id="zoom" min="1" max="4" step="0.1" value="1">
+        </div>
+        <p class="hint" style="margin:8px 0 0">Drag the picture to centre your face.</p>
+      </section>
+
+      <section class="card">
+        <h3><span class="step">2</span>Dots</h3>
+        <div class="field">
+          <div class="label">How many <output id="nOut"></output></div>
+          <input type="range" id="nDots" min="500" max="12000" step="250" value="6000">
+        </div>
+        <div class="field">
+          <div class="label">Detail (eyes, lips) <output id="dOut"></output></div>
+          <input type="range" id="detail" min="0" max="2" step="0.1" value="1">
+        </div>
+        <div class="field">
+          <div class="label">Ignore light areas <output id="cOut"></output></div>
+          <input type="range" id="cut" min="0" max="0.6" step="0.02" value="0.2">
+        </div>
+        <div class="field">
+          <div class="label">Contrast <output id="gOut"></output></div>
+          <input type="range" id="gamma" min="0.6" max="3" step="0.1" value="1.3">
+        </div>
+      </section>
+
+      <section class="card">
+        <h3><span class="step">3</span>Draw it</h3>
+        <button class="btn primary block lg" id="solveBtn">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4-10 6 4 9-4s4-6 7-8"/></svg></span>
+          Connect the dots
+        </button>
+        <label class="toggle" style="margin-top:14px">Show photo <input type="checkbox" id="showPhoto"></label>
+        <label class="toggle">Show dots <input type="checkbox" id="showDots" checked></label>
+        <div class="row" style="margin-top:14px">
+          <button class="btn grow" id="pngBtn">Save PNG</button>
+          <button class="btn grow" id="svgBtn">Save SVG</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<aside class="notes">
+  <button class="btn ghost close" data-notes>Close <kbd>Esc</kbd></button>
+  <span class="kicker">Session 05</span>
+  <h2>I Turned My Face Into a Math Problem</h2>
+  <h4>Run of show</h4>
+  <ol>
+    <li>Selfie (<kbd>C</kbd>) — or a volunteer's. Zoom + drag so the face fills the frame. Dots appear where the photo is dark.</li>
+    <li>“Can a pen visit every dot once, without lifting, by the shortest route?”</li>
+    <li><kbd>Space</kbd>: the first try is greedy — always go to the nearest dot. It works… then makes long ugly jumps.</li>
+    <li>Watch it untangle: crossings disappear, the line gets shorter, the face sharpens.</li>
+    <li>Toggle dots off (<kbd>D</kbd>). One unbroken line. Save the PNG for the post.</li>
+  </ol>
+  <h4>One-liners</h4>
+  <ul>
+    <li>This is the <b>Travelling Salesperson Problem</b>: shortest route visiting every city once.</li>
+    <li>4,000 dots → more possible routes than atoms in the universe. Nobody checks them all.</li>
+    <li>Instead: a good-enough guess, then fix it. <b>2-opt</b>: if two pieces of line cross, swap their ends — uncrossing always makes it shorter.</li>
+    <li>Dots are placed by <b>weighted Voronoi stippling</b>: each dot slides to the “centre of darkness” of its own patch.</li>
+    <li>Same maths routes delivery vans, drills circuit boards, and sequences DNA.</li>
+  </ul>
+  <h4>Keys</h4>
+  <div class="keys">
+    <kbd>Space</kbd><span>Connect the dots</span>
+    <kbd>C</kbd><span>Camera</span>
+    <kbd>D</kbd><span>Toggle dots</span>
+    <kbd>I</kbd><span>Toggle photo</span>
+    <kbd>P</kbd><span>Presentation mode</span>
+  </div>
+</aside>
+
+<script type="module" src="app.js?v=2"></script>
+</body>
+</html>

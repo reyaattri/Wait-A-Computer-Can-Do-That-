@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wait! A computer can do that?</title>
+<link rel="stylesheet" href="shared/style.css?v=5">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5'/><text x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='Arial' font-weight='900'>?!</text></svg>">
+<style>
+  body { overflow: auto; }
+  .wrap { position: relative; max-width: 1152px; margin: 0 auto; padding: 72px 28px 72px; }
+
+  /* hero */
+  .hero { position: relative; padding: 8px 0 12px; }
+  .sun { position: absolute; left: -70px; top: -60px; width: 300px; height: 300px; border-radius: 50%; background: var(--amber); opacity: .9; z-index: -1; }
+  .confetti { position: absolute; z-index: -1; pointer-events: none; }
+  h1 { font: 800 clamp(48px, 8vw, 104px)/.95 var(--display); letter-spacing: -.035em; margin: 0; max-width: 11ch; }
+  h1 .wait {
+    display: inline-block; background: var(--violet); color: var(--white); padding: 0 .16em .04em; border-radius: 18px;
+    border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); transform: rotate(-3deg); margin-bottom: 10px;
+  }
+  .squiggle { display: block; margin-top: 18px; width: 180px; height: 18px; }
+  .lede { margin: 18px 0 0; font-size: 19px; color: var(--ink-2); font-weight: 500; }
+
+  /* sessions */
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 40px 28px; margin-top: 72px; }
+  .s { grid-column: span 2; }
+  .s.big { grid-column: span 3; }
+  .s {
+    --a: var(--violet);
+    position: relative; display: flex; flex-direction: column; text-decoration: none;
+    background: var(--white); border: var(--bw) solid var(--ink); border-radius: var(--r-lg);
+    box-shadow: 8px 8px 0 var(--a);
+    transition: transform .35s var(--bounce), box-shadow .35s var(--bounce);
+  }
+  .s:hover { transform: rotate(-1deg) scale(1.02); box-shadow: 10px 10px 0 var(--a); }
+  .s:active { transform: scale(.99); box-shadow: 4px 4px 0 var(--a); }
+  .badge {
+    position: absolute; top: -20px; left: 22px; z-index: 2; width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--a); border: var(--bw) solid var(--ink);
+    font: 800 16px var(--display);
+  }
+  .s:hover .badge { animation: wiggle .5s ease-in-out; }
+  @keyframes wiggle { 25% { transform: rotate(8deg); } 75% { transform: rotate(-8deg); } }
+  .art { position: relative; height: 190px; margin: 10px 10px 0; border-radius: 16px; background: var(--muted); overflow: hidden; }
+  .art canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .body { display: flex; align-items: end; gap: 12px; padding: 16px 20px 20px; }
+  .body > div { flex: 1; min-width: 0; }
+  .s h2 { margin: 0 0 4px; font-size: 23px; font-weight: 800; letter-spacing: -.015em; line-height: 1.15; }
+  .field { color: var(--ink-3); font-size: 14px; font-weight: 600; }
+  .go {
+    width: 42px; height: 42px; flex: none; border-radius: 50%; display: grid; place-items: center;
+    border: var(--bw) solid var(--ink); transition: background .25s, transform .35s var(--bounce);
+  }
+  .go svg { width: 18px; height: 18px; }
+  .s:hover .go { background: var(--a); transform: translateX(3px); }
+
+  footer { margin-top: 64px; display: flex; gap: 18px; flex-wrap: wrap; color: var(--ink-3); font-size: 14px; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .wrap { padding-top: 48px; }
+    .s, .s.big { grid-column: span 6; }
+    .sun { width: 200px; height: 200px; left: -60px; top: -50px; }
+    .confetti { display: none; }
+    .s { box-shadow: 5px 5px 0 var(--a); }
+  }
+</style>
+</head>
+<body class="dots">
+<div class="wrap">
+  <header class="hero">
+    <div class="sun" aria-hidden="true"></div>
+    <!-- a few confetti shapes, kept to the margins -->
+    <svg class="confetti" style="right:6%;top:10px" width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><path d="M27 4 50 46H4z" fill="#F472B6" stroke="#1E293B" stroke-width="3" stroke-linejoin="round"/></svg>
+    <svg class="confetti" style="right:22%;top:150px" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14" fill="#34D399" stroke="#1E293B" stroke-width="3"/></svg>
+    <svg class="confetti" style="right:2%;top:210px" width="64" height="24" viewBox="0 0 64 24" aria-hidden="true"><path d="M3 12c6-10 12-10 18 0s12 10 18 0 12-10 22 0" fill="none" stroke="#8B5CF6" stroke-width="4" stroke-linecap="round"/></svg>
+
+    <h1><span class="wait">Wait!</span><br>A computer can do that?</h1>
+    <svg class="squiggle" viewBox="0 0 180 18" aria-hidden="true"><path d="M3 9c10-8 20-8 30 0s20 8 30 0 20-8 30 0 20 8 30 0 20-8 30 0 15 6 24 0" fill="none" stroke="#F472B6" stroke-width="4" stroke-linecap="round"/></svg>
+    <p class="lede">Five live demos. Five “that shouldn't be possible” moments.</p>
+  </header>
+
+  <main class="grid">
+    <a class="s big" href="01-healing-pixels/" style="--a:var(--mint)">
+      <span class="badge">01</span>
+      <div class="art"><canvas data-art="nca"></canvas></div>
+      <div class="body"><div><h2>I Taught Pixels to Heal Themselves</h2><div class="field">AI + computational biology</div></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </a>
+    <a class="s big" href="02-zip-in-a-cat/" style="--a:var(--violet)">
+      <span class="badge">02</span>
+      <div class="art"><canvas data-art="zip"></canvas></div>
+      <div class="body"><div><h2>I Hid a ZIP File Inside a Cat</h2><div class="field">File formats + creative computing</div></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </a>
+    <a class="s" href="03-talking-tabs/" style="--a:var(--pink)">
+      <span class="badge">03</span>
+      <div class="art"><canvas data-art="tabs"></canvas></div>
+      <div class="body"><div><h2>My Browser Tabs Are Talking Behind My Back</h2><div class="field">Web development</div></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </a>
+    <a class="s" href="04-picture-in-sound/" style="--a:var(--amber)">
+      <span class="badge">04</span>
+      <div class="art"><canvas data-art="sound"></canvas></div>
+      <div class="body"><div><h2>I Hid a Picture Inside a Sound</h2><div class="field">Signal processing</div></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </a>
+    <a class="s" href="05-face-into-math/" style="--a:#38BDF8">
+      <span class="badge">05</span>
+      <div class="art"><canvas data-art="tsp"></canvas></div>
+      <div class="body"><div><h2>I Turned My Face Into a Math Problem</h2><div class="field">Algorithms + generative art</div></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </a>
+  </main>
+
+  <footer><span><kbd>N</kbd> notes</span><span><kbd>P</kbd> present</span><span><kbd>F</kbd> fullscreen</span></footer>
+</div>
+
+<script>
+// Small animated thumbnails in the same palette.
+const INK = "#1E293B", V = "#8B5CF6", PK = "#F472B6", AM = "#FBBF24", MT = "#34D399";
+const arts = [...document.querySelectorAll("canvas[data-art]")];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let D = 1;
+function fit() { arts.forEach((cv) => { const r = cv.getBoundingClientRect(); D = Math.min(2, devicePixelRatio); cv.width = r.width * D; cv.height = r.height * D; }); }
+fit(); addEventListener("resize", fit);
+
+const rnd = (() => { let s = 7; return () => ((s = (s * 16807) % 2147483647) / 2147483647); })();
+const pts = Array.from({ length: 120 }, () => { const a = rnd() * Math.PI * 2, r = Math.sqrt(rnd()); return [Math.cos(a) * r, Math.sin(a) * r * 0.85]; });
+const tour = [0]; { const used = new Set([0]); while (tour.length < pts.length) { const p = pts[tour.at(-1)]; let b = -1, bd = 1e9; pts.forEach((q, i) => { if (used.has(i)) return; const d = (p[0]-q[0])**2 + (p[1]-q[1])**2; if (d < bd) { bd = d; b = i; } }); used.add(b); tour.push(b); } }
+// smiley bitmap for the sound card
+const smile = (u, v) => Math.abs(Math.hypot(u, v) - 0.3) < 0.045 && v > 0.04 || Math.hypot(u + 0.15, v + 0.12) < 0.06 || Math.hypot(u - 0.15, v + 0.12) < 0.06 || Math.abs(Math.hypot(u, v) - 0.44) < 0.035;
+
+function draw(t) {
+  for (const cv of arts) {
+    const c = cv.getContext("2d"), W = cv.width, H = cv.height, k = cv.dataset.art;
+    c.clearRect(0, 0, W, H);
+    c.lineJoin = c.lineCap = "round";
+    if (k === "nca") {
+      const n = 22, s = Math.min(W, H) / n * 0.9, ox = W / 2 - n * s / 2, oy = H / 2 - n * s / 2;
+      const ph = (t / 4500) % 1, grow = Math.min(1, ph * 2.4), hole = ph > 0.55 && ph < 0.72;
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+        const u = (x - n / 2 + .5) / 8, v = -(y - n / 2 + .5) / 8 + 0.1;
+        const heart = Math.pow(u * u + v * v - 1, 3) - u * u * v * v * v < 0;
+        if (!heart || Math.hypot(u, v) > grow * 1.6) continue;
+        if (hole && Math.hypot(u - 0.5, v - 0.15) < 0.5) continue;
+        c.fillStyle = (x + y) % 5 === 0 ? MT : (x * y) % 7 === 0 ? "#6EE7B7" : "#10B981";
+        c.fillRect(ox + x * s, oy + y * s, s - D, s - D);
+      }
+    } else if (k === "zip") {
+      const bw = W * 0.8, x0 = W * 0.1, y0 = H * 0.42, bh = H * 0.2, split = 0.62 + 0.04 * Math.sin(t / 900);
+      c.lineWidth = 2.5 * D; c.strokeStyle = INK;
+      c.fillStyle = "#DDD6FE"; c.beginPath(); c.roundRect(x0, y0, bw * split, bh, [10 * D, 0, 0, 10 * D]); c.fill(); c.stroke();
+      c.fillStyle = V; c.beginPath(); c.roundRect(x0 + bw * split, y0, bw * (1 - split), bh, [0, 10 * D, 10 * D, 0]); c.fill(); c.stroke();
+      c.font = `700 ${13 * D}px "Plus Jakarta Sans", sans-serif`; c.fillStyle = INK;
+      c.fillText("🐈 cat.jpg", x0, y0 - 12 * D);
+      c.textAlign = "right"; c.fillText("secret.zip 🤐", x0 + bw, y0 + bh + 24 * D); c.textAlign = "left";
+    } else if (k === "tabs") {
+      const ws = [[0.1, 0.16, PK], [0.56, 0.1, AM], [0.32, 0.52, MT]];
+      const C = ws.map(([x, y], i) => [W * (x + 0.17) + Math.sin(t / 1300 + i) * 5 * D, H * (y + 0.16) + Math.cos(t / 1600 + i) * 4 * D]);
+      c.setLineDash([6 * D, 6 * D]); c.lineDashOffset = -t / 40; c.strokeStyle = INK; c.lineWidth = 2 * D;
+      for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) { c.beginPath(); c.moveTo(...C[i]); c.lineTo(...C[j]); c.stroke(); }
+      c.setLineDash([]);
+      C.forEach(([x, y], i) => {
+        c.fillStyle = "#fff"; c.lineWidth = 2 * D;
+        c.beginPath(); c.roundRect(x - W * 0.16, y - H * 0.16, W * 0.32, H * 0.32, 8 * D); c.fill(); c.stroke();
+        c.beginPath(); c.moveTo(x - W * 0.16, y - H * 0.16 + 10 * D); c.lineTo(x + W * 0.16, y - H * 0.16 + 10 * D); c.stroke();
+        c.fillStyle = ws[i][2]; c.beginPath(); c.arc(x, y + 4 * D, 11 * D, 0, 7); c.fill(); c.stroke();
+      });
+    } else if (k === "sound") {
+      const cols = 56, rows = 22, cw = W / cols, rh = H / rows, sweep = (t / 55) % (cols + 24);
+      c.fillStyle = "#0b0d12"; c.fillRect(0, 0, W, H);
+      for (let x = 0; x < Math.min(cols, sweep); x++) for (let y = 0; y < rows; y++) {
+        const u = (x / cols - 0.5) * 1.6 * (W / H) / 2.2, v = y / rows - 0.5;
+        if (!smile(u, v)) continue;
+        c.fillStyle = AM; c.fillRect(x * cw, y * rh, cw + 0.5, rh + 0.5);
+      }
+    } else if (k === "tsp") {
+      const s = Math.min(W, H) * 0.42, p = Math.min(1, ((t / 5000) % 1.2));
+      c.strokeStyle = V; c.lineWidth = 2 * D; c.beginPath();
+      const m = Math.floor(tour.length * p);
+      for (let i = 0; i <= m && i < tour.length; i++) { const q = pts[tour[i]]; i ? c.lineTo(W / 2 + q[0] * s, H / 2 + q[1] * s) : c.moveTo(W / 2 + q[0] * s, H / 2 + q[1] * s); }
+      c.stroke();
+      c.fillStyle = INK;
+      pts.forEach((q) => { c.beginPath(); c.arc(W / 2 + q[0] * s, H / 2 + q[1] * s, 1.6 * D, 0, 7); c.fill(); });
+    }
+  }
+  if (!reduce) requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZIP Inside a Cat</title>
+<link rel="stylesheet" href="../shared/style.css?v=5">
+<link rel="stylesheet" href="style.css?v=6">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='18' r='12' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5'/><path d='M6 12 7 3l7 5M26 12l-1-9-7 5' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5' stroke-linejoin='round'/></svg>">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="All sessions">
+      <span class="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
+      <span class="session-no">02</span>
+      <span class="title">I Hid a ZIP File Inside a Cat</span>
+    </a>
+    <div class="spacer"></div>
+    <div class="top-actions">
+      <button class="btn ghost" data-notes><span>Notes</span> <kbd>N</kbd></button>
+      <button class="btn ghost" data-present><span>Present</span> <kbd>P</kbd></button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main class="stage dots" id="stage">
+      <div class="duo">
+        <!-- the file, seen as a picture -->
+        <section class="view" id="imgView">
+          <div class="view-head"><span class="fname" id="fname">cat.jpg</span><span class="fsize mono" id="fsize"></span></div>
+          <div class="photo"><img id="photo" alt="The cat picture"></div>
+          <button class="btn primary lg" id="openZipBtn">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            Open it as a ZIP
+          </button>
+        </section>
+
+        <!-- the same bytes, seen as an archive -->
+        <section class="view zip" id="zipView" hidden>
+          <div class="view-head"><span class="fname">cat.zip</span><span class="fsize mono" id="zipCount"></span></div>
+          <div class="filelist" id="filelist"></div>
+          <pre class="peek" id="peek" hidden></pre>
+        </section>
+      </div>
+
+      <section class="bytes">
+        <div class="bytes-head"><span>Inside the file</span><span class="mono" id="byteTotal"></span></div>
+        <div class="bar" id="bar">
+          <div class="seg-jpg" id="segJpg"><span>JPEG picture</span></div>
+          <div class="seg-zip" id="segZip"><span>ZIP</span></div>
+        </div>
+        <div class="hexrows" id="hexrows"></div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <section class="card">
+        <h3><span class="step">1</span>The cat</h3>
+        <div class="row">
+          <div class="drop grow" id="catDrop"><strong>Drop a photo</strong><br>.jpg or .png</div>
+        </div>
+        <button class="btn block" id="defaultCat" style="margin-top:10px">Use the cartoon cat</button>
+      </section>
+
+      <section class="card">
+        <h3><span class="step">2</span>Secret files <span class="muted" id="secretCount"></span></h3>
+        <div class="secrets" id="secrets"></div>
+        <div class="drop" id="secretDrop" style="margin-top:10px"><strong>Drop files to hide</strong><br>anything: pdf, mp3, code…</div>
+      </section>
+
+      <section class="card">
+        <h3><span class="step">3</span>Glue them together</h3>
+        <button class="btn primary block lg" id="glueBtn">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          Hide files in the cat
+        </button>
+        <button class="btn block" id="dlBtn" style="margin-top:10px" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14"/></svg>
+          Download cat.jpg
+        </button>
+      </section>
+
+      <section class="card">
+        <h3><span class="step">4</span>Check any file</h3>
+        <div class="drop" id="inspectDrop"><strong>Drop a file</strong><br>find out if something's hiding in it</div>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<aside class="notes">
+  <button class="btn ghost close" data-notes>Close <kbd>Esc</kbd></button>
+  <span class="kicker">Session 02</span>
+  <h2>I Hid a ZIP File Inside a Cat</h2>
+  <h4>Run of show</h4>
+  <ol>
+    <li>Show the cat. “Just a photo, right?”</li>
+    <li>Click <b>Open it as a ZIP</b> (<kbd>Z</kbd>). Files appear. Open the secret note.</li>
+    <li>Explain the byte bar: picture first, ZIP glued on the end.</li>
+    <li>Drop a volunteer's file in → <b>Hide</b> (<kbd>H</kbd>) → download.</li>
+    <li>On the real desktop: double-click → photo app. Rename to <code>.zip</code> → it unzips.</li>
+  </ol>
+  <h4>Why it works</h4>
+  <ul>
+    <li>Files are just bytes. The extension is only a hint.</li>
+    <li>A JPEG <b>starts</b> with <code>FF D8</code> and ends at <code>FF D9</code>. Viewers stop reading there.</li>
+    <li>A ZIP is read from the <b>end</b>: its table of contents (<code>PK 05 06</code>) sits at the very end and points backwards.</li>
+    <li>Two readers, opposite ends, never collide. That's a <b>polyglot file</b>.</li>
+    <li>Real use: game mods, some malware (why scanners check contents, not names).</li>
+  </ul>
+  <h4>Keys</h4>
+  <div class="keys">
+    <kbd>Z</kbd><span>Open as ZIP / back to photo</span>
+    <kbd>H</kbd><span>Hide files</span>
+    <kbd>P</kbd><span>Presentation mode</span>
+  </div>
+</aside>
+
+<script type="module" src="app.js?v=1"></script>
+</body>
+</html>

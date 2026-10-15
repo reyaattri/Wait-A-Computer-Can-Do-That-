@@ -1,0 +1,61 @@
+:root { --session: var(--pink); }
+
+#cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.me-badge {
+  position: absolute; left: 22px; top: 18px; z-index: 3; display: flex; align-items: center; gap: 12px;
+  background: var(--white); border: var(--bw) solid var(--ink); box-shadow: var(--pop);
+  border-radius: var(--r-md); padding: 10px 16px 10px 12px;
+}
+.me-badge .sw { width: 30px; height: 30px; border-radius: 50%; background: var(--me, var(--pink)); border: var(--bw) solid var(--ink); }
+.me-badge small { display: block; font: 700 11px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.me-badge b { font: 800 20px/1.1 var(--display); }
+
+.count { position: absolute; right: 24px; top: 14px; z-index: 3; text-align: right; }
+.count b { display: block; font: 800 58px/1 var(--display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.count span { font: 700 12px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+
+.empty-hint {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, 112px); text-align: center; z-index: 2;
+  transition: opacity .3s, transform .4s var(--bounce);
+}
+.empty-hint.gone { opacity: 0; pointer-events: none; transform: translate(-50%, 130px) scale(.9); }
+.eh-title { font: 800 22px var(--display); margin-bottom: 14px; white-space: nowrap; }
+
+.chatbar {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3;
+  display: flex; gap: 8px; width: min(520px, calc(100% - 44px));
+  background: var(--white); border: var(--bw) solid var(--ink); box-shadow: var(--pop);
+  padding: 6px; border-radius: var(--r-full);
+}
+.chatbar input { border: 0; background: transparent; padding-left: 14px; font-weight: 600; }
+.chatbar input:focus { box-shadow: none; }
+
+.roster { display: flex; flex-direction: column; gap: 6px; }
+.peer {
+  display: grid; grid-template-columns: 14px 1fr auto; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 12px; background: var(--muted);
+  animation: pop .45s var(--bounce);
+}
+.peer .dot { width: 14px; height: 14px; border-radius: 50%; border: var(--bw) solid var(--ink); }
+.peer .nm { font-weight: 700; font-size: 14px; }
+.peer .nm small { color: var(--ink-3); font-weight: 600; margin-left: 6px; font-size: 12px; }
+.peer .pos { font: 500 11px var(--mono); color: var(--ink-3); text-align: right; line-height: 1.35; }
+.peer .tag { font: 700 10px var(--sans); letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 99px; background: var(--amber); border: 1.5px solid var(--ink); margin-left: 6px; }
+@keyframes pop { from { transform: scale(.6); opacity: 0; } }
+
+.log {
+  margin-top: 12px; height: 220px; overflow: hidden; font: 500 11.5px/1.6 var(--mono);
+  background: var(--muted); border-radius: 12px; padding: 8px 10px;
+  display: flex; flex-direction: column-reverse; gap: 2px;
+  mask-image: linear-gradient(to top, #000 70%, transparent);
+}
+.log div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-3); animation: slide .25s; }
+.log div b { font-weight: 700; }
+.log div .ty { color: var(--ink); font-weight: 600; }
+@keyframes slide { from { opacity: 0; transform: translateY(6px); } }
+
+body.flash .stage::after {
+  content: ""; position: absolute; inset: 0; background: var(--flash, var(--amber)); z-index: 5; animation: flash .7s forwards; pointer-events: none;
+}
+@keyframes flash { from { opacity: .9; } to { opacity: 0; } }

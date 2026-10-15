@@ -1,0 +1,69 @@
+:root { --session: var(--amber); }
+
+.stage { display: grid; grid-template-rows: auto 1fr auto; padding: 16px 26px 22px; gap: 12px; }
+.screen-head { display: flex; align-items: center; justify-content: space-between; min-height: 32px; }
+.screen-head .stage-label { position: static; }
+
+/* The spectrogram is a dark "screen" sticker on the paper */
+.spec-wrap {
+  position: relative; min-height: 0; border-radius: var(--r-md); overflow: hidden;
+  background: #0b0d12; border: var(--bw) solid var(--ink); box-shadow: 8px 8px 0 var(--ink);
+}
+#spec, #axes { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.veil {
+  position: absolute; inset: 0; display: grid; place-items: center; z-index: 2;
+  background: var(--white);
+  transition: clip-path .8s var(--bounce);
+  clip-path: circle(150% at 50% 50%);
+}
+.veil.gone { clip-path: circle(0% at 50% 50%); pointer-events: none; }
+.veil-inner { text-align: center; padding: 20px; }
+.veil-title { font: 800 clamp(26px, 3.4vw, 44px)/1.1 var(--display); letter-spacing: -.02em; margin-bottom: 22px; }
+.veil-title em { font-style: normal; background: var(--amber); padding: 0 .18em; border-radius: 10px; box-decoration-break: clone; }
+.veil-eq { display: flex; gap: 6px; justify-content: center; height: 40px; align-items: end; margin-bottom: 18px; }
+.veil-eq i { width: 9px; border-radius: 9px; border: var(--bw) solid var(--ink); height: 30%; }
+.veil-eq i:nth-child(3n+1) { background: var(--violet); }
+.veil-eq i:nth-child(3n+2) { background: var(--pink); }
+.veil-eq i:nth-child(3n) { background: var(--amber); }
+body.playing .veil-eq i { animation: eq .9s ease-in-out infinite alternate; }
+.veil-eq i:nth-child(2) { animation-delay: -.2s !important; } .veil-eq i:nth-child(3) { animation-delay: -.5s !important; }
+.veil-eq i:nth-child(4) { animation-delay: -.1s !important; } .veil-eq i:nth-child(5) { animation-delay: -.7s !important; }
+.veil-eq i:nth-child(6) { animation-delay: -.35s !important; } .veil-eq i:nth-child(7) { animation-delay: -.6s !important; }
+@keyframes eq { from { height: 20%; } to { height: 100%; } }
+#heroPlay.hidden { display: none; }
+
+.wave-wrap { height: 112px; display: grid; grid-template-rows: auto 1fr; gap: 6px; }
+.wave-head { display: flex; justify-content: space-between; font: 700 12px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.wave-head .mono { text-transform: none; letter-spacing: 0; color: var(--ink); }
+#wave { width: 100%; height: 100%; border-radius: var(--r-md); background: var(--white); border: var(--bw) solid var(--ink); cursor: pointer; }
+
+.live-pill {
+  display: flex; align-items: center; gap: 8px; font: 700 12px var(--sans); letter-spacing: .06em; text-transform: uppercase;
+  border: var(--bw) solid var(--ink); border-radius: var(--r-full); padding: 5px 12px; background: var(--white);
+}
+.live-pill .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); border: 1.5px solid var(--ink); }
+body.playing .live-pill { background: var(--amber); }
+body.playing .live-pill .dot { background: var(--white); animation: blink 1s infinite; }
+body.mic .live-pill { background: var(--pink); }
+@keyframes blink { 50% { opacity: .3; } }
+
+.src-pane { margin-top: 12px; }
+.emoji-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.emoji-grid button {
+  aspect-ratio: 1; font-size: 22px; border-radius: 12px; border: var(--bw) solid var(--line);
+  background: var(--white); cursor: pointer; transition: transform .25s var(--bounce), border-color .2s;
+}
+.emoji-grid button:hover { transform: rotate(-6deg) scale(1.08); border-color: var(--ink); }
+.emoji-grid button.on { border-color: var(--ink); background: var(--amber); box-shadow: 2px 2px 0 var(--ink); }
+
+.preview { margin-top: 12px; position: relative; border-radius: 12px; overflow: hidden; background: #0b0d12; border: var(--bw) solid var(--ink); }
+.preview canvas { width: 100%; height: auto; display: block; image-rendering: pixelated; transition: filter .5s; }
+.preview.spoiler canvas { filter: blur(12px) brightness(.5); }
+.spoiler-tag {
+  position: absolute; inset: 0; display: grid; place-items: center; font: 700 12px var(--sans);
+  color: var(--white); letter-spacing: .04em; transition: opacity .3s; pointer-events: none;
+}
+.preview:not(.spoiler) .spoiler-tag { opacity: 0; }
+
+.btn.rec { background: var(--pink); }
