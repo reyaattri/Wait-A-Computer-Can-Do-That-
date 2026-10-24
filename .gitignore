@@ -7,3 +7,6 @@ __pycache__/
 01-healing-pixels/weights_backup/
 01-healing-pixels/train/*.log
 *.tmp
+
+# QR codes for handouts
+qr-session-*.png
