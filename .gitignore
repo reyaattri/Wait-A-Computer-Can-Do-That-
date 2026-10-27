@@ -10,3 +10,6 @@ __pycache__/
 
 # QR codes for handouts
 qr-session-*.png
+
+# slide images (local only)
+slides/

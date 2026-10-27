@@ -122,7 +122,8 @@ function render() {
     const o = i * C;
     const a = Math.min(1, Math.max(0, state[o + 3]));
     // premultiplied RGBA over white paper
-    const r = Math.min(1, Math.max(0, state[o])), g = Math.min(1, Math.max(0, state[o + 1])), b = Math.min(1, Math.max(0, state[o + 2]));
+    // colour can't exceed how alive a cell is (premultiplied alpha); otherwise faint edge cells flash neon
+    const r = Math.min(a, Math.max(0, state[o])), g = Math.min(a, Math.max(0, state[o + 1])), b = Math.min(a, Math.max(0, state[o + 2]));
     d[i * 4] = (1 - a + r) * 255; d[i * 4 + 1] = (1 - a + g) * 255; d[i * 4 + 2] = (1 - a + b) * 255; d[i * 4 + 3] = 255;
     const on = a > 0.1 ? 1 : 0; alive += on;
     inter += on & M.mask[i]; uni += on | M.mask[i];
