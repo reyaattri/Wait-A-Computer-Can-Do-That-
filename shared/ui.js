@@ -18,24 +18,16 @@ export function paintRange(el) {
 
 export function initShell() {
   $$('input[type="range"]').forEach((r) => { paintRange(r); r.addEventListener("input", () => paintRange(r)); });
-  const notes = $(".notes");
-  const toggleNotes = () => notes && notes.classList.toggle("open");
-  $$("[data-notes]").forEach((b) => b.addEventListener("click", toggleNotes));
-  $$("[data-present]").forEach((b) => b.addEventListener("click", togglePresent));
   addEventListener("keydown", (e) => {
     if (e.target.matches("input[type=text], textarea")) return;
-    if (e.key === "n" || e.key === "N") toggleNotes();
-    else if (e.key === "p" || e.key === "P") togglePresent();
-    else if (e.key === "f" || e.key === "F") {
+    if ((e.key === "f" || e.key === "F") && document.documentElement.requestFullscreen) {
       document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
-    } else if (e.key === "Escape" && notes) notes.classList.remove("open");
+    }
   });
 }
 
-function togglePresent() {
-  document.body.classList.toggle("present");
-  dispatchEvent(new Event("resize"));
-}
+// Phones and tablets: no keyboard, so the pages offer buttons instead of key hints.
+export const isTouch = matchMedia("(pointer: coarse)").matches;
 
 // Segmented control: <div class="seg" data-name="mode"><button data-v="a" class="on">…</button>…</div>
 export function seg(el, onChange) {

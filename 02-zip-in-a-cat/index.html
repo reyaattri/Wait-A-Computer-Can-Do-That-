@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ZIP Inside a Cat</title>
-<script src="../shared/guest.js?v=1"></script>
+<script src="../shared/guest.js?v=2"></script>
 <link rel="stylesheet" href="../shared/style.css?v=8">
 <link rel="stylesheet" href="style.css?v=6">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='18' r='12' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5'/><path d='M6 12 7 3l7 5M26 12l-1-9-7 5' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5' stroke-linejoin='round'/></svg>">
@@ -18,10 +18,6 @@
       <span class="title">I Hid a ZIP File Inside a Cat</span>
     </a>
     <div class="spacer"></div>
-    <div class="top-actions">
-      <button class="btn ghost" data-notes><span>Notes</span> <kbd>N</kbd></button>
-      <button class="btn ghost" data-present><span>Present</span> <kbd>P</kbd></button>
-    </div>
   </header>
 
   <div class="layout">
@@ -90,33 +86,6 @@
   </div>
 </div>
 
-<aside class="notes">
-  <button class="btn ghost close" data-notes>Close <kbd>Esc</kbd></button>
-  <span class="kicker">Session 02</span>
-  <h2>I Hid a ZIP File Inside a Cat</h2>
-  <h4>Run of show</h4>
-  <ol>
-    <li>Show the cat. “Just a photo, right?”</li>
-    <li>Click <b>Open it as a ZIP</b> (<kbd>Z</kbd>). Files appear. Open the secret note.</li>
-    <li>Explain the byte bar: picture first, ZIP glued on the end.</li>
-    <li>Drop a volunteer's file in → <b>Hide</b> (<kbd>H</kbd>) → download.</li>
-    <li>On the real desktop: double-click → photo app. Rename to <code>.zip</code> → it unzips.</li>
-  </ol>
-  <h4>Why it works</h4>
-  <ul>
-    <li>Files are just bytes. The extension is only a hint.</li>
-    <li>A JPEG <b>starts</b> with <code>FF D8</code> and ends at <code>FF D9</code>. Viewers stop reading there.</li>
-    <li>A ZIP is read from the <b>end</b>: its table of contents (<code>PK 05 06</code>) sits at the very end and points backwards.</li>
-    <li>Two readers, opposite ends, never collide. That's a <b>polyglot file</b>.</li>
-    <li>Real use: game mods, some malware (why scanners check contents, not names).</li>
-  </ul>
-  <h4>Keys</h4>
-  <div class="keys">
-    <kbd>Z</kbd><span>Open as ZIP / back to photo</span>
-    <kbd>H</kbd><span>Hide files</span>
-    <kbd>P</kbd><span>Presentation mode</span>
-  </div>
-</aside>
 
 <script type="module" src="app.js?v=1"></script>
 </body>

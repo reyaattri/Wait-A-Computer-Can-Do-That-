@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wait! A computer can do that?</title>
-<script src="shared/guest.js?v=1"></script>
+<script src="shared/guest.js?v=2"></script>
 <link rel="stylesheet" href="shared/style.css?v=8">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5'/><text x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='Arial' font-weight='900'>?!</text></svg>">
 <style>
@@ -20,11 +20,10 @@
     display: inline-block; background: var(--violet); color: var(--white); padding: 0 .16em .04em; border-radius: 18px;
     border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); transform: rotate(-3deg); margin-bottom: 10px;
   }
-  .squiggle { display: block; margin-top: 18px; width: 180px; height: 18px; }
-  .lede { margin: 18px 0 0; font-size: 19px; color: var(--ink-2); font-weight: 500; }
+  .squiggle { display: block; margin-top: 22px; width: 180px; height: 18px; }
 
   /* sessions */
-  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 40px 28px; margin-top: 72px; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 40px 28px; margin-top: 64px; }
   .s { grid-column: span 2; }
   .s.big { grid-column: span 3; }
   .s {
@@ -56,10 +55,9 @@
   .go svg { width: 18px; height: 18px; }
   .s:hover .go { background: var(--a); transform: translateX(3px); }
 
-  footer { margin-top: 64px; display: flex; gap: 18px; flex-wrap: wrap; color: var(--ink-3); font-size: 14px; font-weight: 600; }
-
   @media (max-width: 900px) {
     .wrap { padding-top: 48px; }
+    .grid { margin-top: 48px; }
     .s, .s.big { grid-column: span 6; }
     .sun { width: 200px; height: 200px; left: -60px; top: -50px; }
     .confetti { display: none; }
@@ -78,7 +76,6 @@
 
     <h1><span class="wait">Wait!</span><br>A computer can do that?</h1>
     <svg class="squiggle" viewBox="0 0 180 18" aria-hidden="true"><path d="M3 9c10-8 20-8 30 0s20 8 30 0 20-8 30 0 20 8 30 0 20-8 30 0 15 6 24 0" fill="none" stroke="#F472B6" stroke-width="4" stroke-linecap="round"/></svg>
-    <p class="lede">Five live demos. Five “that shouldn't be possible” moments.</p>
   </header>
 
   <main class="grid">
@@ -109,7 +106,6 @@
     </a>
   </main>
 
-  <footer><span><kbd>N</kbd> notes</span><span><kbd>P</kbd> present</span><span><kbd>F</kbd> fullscreen</span></footer>
 </div>
 
 <script>

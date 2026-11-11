@@ -2,6 +2,8 @@ import { $, $$, initShell, toast, dropZone, download, fitCanvas, fmt } from "../
 initShell();
 
 const INK = "#1E293B";
+// Phones and tablets have no Space bar: there the line draws itself as soon as the dots settle.
+const TOUCH = matchMedia("(pointer: coarse)").matches;
 const worker = new Worker("worker.js?v=2");
 const S = {
   src: null,            // full-resolution source picture
@@ -14,7 +16,9 @@ const S = {
   phase: "photo",
   pen: null,            // {t0, dur} while the first greedy tour is being "drawn"
   pending: null,        // tour updates that arrive while the pen is still drawing
+  stippled: false,      // dots have finished settling
 };
+let stream = null, snapping = false;   // camera stream, and a countdown in progress
 const cv = $("#cv"), ctx = cv.getContext("2d");
 let view = { w: 0, h: 0, dpr: 1 };
 
@@ -27,6 +31,21 @@ function setPhase(p) {
     li.classList.toggle("done", i < k || p === "done");
     li.classList.toggle("on", i === k && p !== "done");
   });
+  updateQuick();
+}
+
+// ── The phone action bar: one big button that always shows the next step ──
+function updateQuick() {
+  const go = $("#qGo"), txt = $("#qGoText");
+  if (!go) return;
+  let label = "Connect dots", busy = false;
+  if (stream) { label = "Snap"; }
+  else if (S.phase === "dots" && !S.stippled) { label = "Placing dots"; busy = true; }
+  else if (S.phase === "path" || S.phase === "opt") { label = "Untangling"; busy = true; }
+  else if (S.phase === "done") label = "Save it";
+  txt.textContent = label;
+  go.disabled = busy; go.classList.toggle("busy", busy);
+  $("#qSelfie span").textContent = stream ? "Cancel" : "Selfie";
 }
 
 // ── Picture → darkness map ──────────────────────────────────────────────────
@@ -157,7 +176,7 @@ function computeDark() {
 }
 
 function restipple() {
-  S.tour = S.shown = null; S.pen = S.pending = null; S.swaps = 0; S.firstLen = S.length = 0;
+  S.tour = S.shown = null; S.pen = S.pending = null; S.swaps = 0; S.firstLen = S.length = 0; S.stippled = false;
   setPhase("dots");
   const n = +$("#nDots").value;
   worker.postMessage({ type: "stipple", dark: S.dark, w: S.w, h: S.h, n, iters: 26 });
@@ -167,7 +186,11 @@ function restipple() {
 // ── Worker messages ─────────────────────────────────────────────────────────
 worker.onmessage = ({ data: m }) => {
   if (m.type === "dots") { S.xs = m.xs; S.ys = m.ys; stats(); }
-  else if (m.type === "stippled") { toast("Dots ready — press Space"); }
+  else if (m.type === "stippled") {
+    S.stippled = true; updateQuick();
+    if (TOUCH) solve();                      // phones: no extra step
+    else toast("Dots ready: press Space to connect them");
+  }
   else if (m.type === "tour") {
     if (m.phase === "greedy") {
       S.tour = m.tour; S.firstLen = m.firstLen; S.length = m.length; S.swaps = 0;
@@ -186,7 +209,8 @@ function applyTour(m) {
 }
 
 function solve() {
-  if (!S.xs) return;
+  if (!S.xs || !S.stippled) return;
+  if (S.tour && S.phase !== "done") return;   // already drawing
   $("#showDots").checked = false; // the line alone reads best
   worker.postMessage({ type: "solve", xs: S.xs, ys: S.ys });
 }
@@ -271,6 +295,7 @@ cv.addEventListener("pointermove", (e) => {
   S.crop.cx = Math.min(1, Math.max(0, S.drag.cx - ((e.clientX - S.drag.x) * k) / S.src.width));
   S.crop.cy = Math.min(1, Math.max(0, S.drag.cy - ((e.clientY - S.drag.y) * k) / S.src.height));
 });
+cv.addEventListener("pointercancel", () => { S.drag = null; cv.style.cursor = ""; });
 cv.addEventListener("pointerup", () => {
   if (!S.drag) return;
   const moved = S.crop.cx !== S.drag.cx || S.crop.cy !== S.drag.cy;
@@ -282,7 +307,6 @@ function resize() { view = fitCanvas(cv); view.dpr = cv.width / view.w; }
 addEventListener("resize", resize);
 
 // ── Camera ──────────────────────────────────────────────────────────────────
-let stream = null;
 async function startCam() {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720, facingMode: "user" } });
@@ -290,20 +314,32 @@ async function startCam() {
   const v = $("#video"); v.srcObject = stream; v.hidden = false; await v.play();
   $("#camUi").hidden = false; $("#count").textContent = "";
   $("#camBtn span").textContent = "Cancel selfie";
+  updateQuick();
+  if (TOUCH) $("#paper").scrollIntoView({ behavior: "smooth", block: "center" });
 }
 function stopCam() {
   if (!stream) return;
   stream.getTracks().forEach((t) => t.stop()); stream = null;
   $("#video").hidden = true; $("#camUi").hidden = true; $("#camBtn span").textContent = "Take a selfie";
+  updateQuick();
 }
 async function snap() {
+  if (snapping) return; snapping = true;
   for (const n of ["3", "2", "1"]) { $("#count").textContent = n; await new Promise((r) => setTimeout(r, 700)); }
   $("#count").textContent = "";
   $$("#samples button").forEach((x) => x.classList.remove("on"));
+  snapping = false;
   usePicture($("#video")); rememberPhoto();
 }
 $("#camBtn").onclick = () => (stream ? stopCam() : startCam());
 $("#snapBtn").onclick = snap;
+$("#qSelfie").onclick = () => (stream ? stopCam() : startCam());
+$("#qPhoto").onclick = () => { stopCam(); $("#imgDrop input").click(); };
+$("#qGo").onclick = () => {
+  if (stream) snap();
+  else if (S.phase === "done") $("#pngBtn").click();
+  else solve();
+};
 
 dropZone($("#imgDrop"), async ([f]) => {
   if (!f.type.startsWith("image/")) return toast("Pick an image");

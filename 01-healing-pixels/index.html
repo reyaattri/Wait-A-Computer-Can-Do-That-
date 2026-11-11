@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pixels That Heal</title>
-<script src="../shared/guest.js?v=1"></script>
+<script src="../shared/guest.js?v=2"></script>
 <link rel="stylesheet" href="../shared/style.css?v=8">
 <link rel="stylesheet" href="style.css?v=3">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='26' height='26' rx='7' fill='%2334D399' stroke='%231E293B' stroke-width='2.5'/><path d='M16 10v12M10 16h12' stroke='%231E293B' stroke-width='3' stroke-linecap='round'/></svg>">
@@ -18,10 +18,6 @@
       <span class="title">I Taught Pixels to Heal Themselves</span>
     </a>
     <div class="spacer"></div>
-    <div class="top-actions">
-      <button class="btn ghost" data-notes><span>Notes</span> <kbd>N</kbd></button>
-      <button class="btn ghost" data-present><span>Present</span> <kbd>P</kbd></button>
-    </div>
   </header>
 
   <div class="layout">
@@ -89,36 +85,6 @@
   </div>
 </div>
 
-<aside class="notes">
-  <button class="btn ghost close" data-notes>Close <kbd>Esc</kbd></button>
-  <span class="kicker">Session 01</span>
-  <h2>I Taught Pixels to Heal Themselves</h2>
-  <h4>Run of show</h4>
-  <ol>
-    <li>Start empty. <b>Plant one cell</b> (<kbd>S</kbd>). It grows into a creature.</li>
-    <li>“No pixel knows the whole picture. Each one only sees its 8 neighbours.”</li>
-    <li>Slice it in half (<kbd>X</kbd>) — it regrows. Let a volunteer do the cutting.</li>
-    <li>Show hidden channels (<kbd>H</kbd>): the cells' secret signals, like chemical gradients in an embryo.</li>
-    <li>Punchline: there is no blueprint anywhere. Just one tiny rule, copied into every cell.</li>
-  </ol>
-  <h4>One-liners</h4>
-  <ul>
-    <li>A <b>Neural Cellular Automaton</b>: every pixel runs the <i>same</i> tiny neural network (~8,000 numbers).</li>
-    <li>Each pixel holds 16 numbers: 4 you see (red, green, blue, alive) + 12 hidden “chemicals”.</li>
-    <li>Every step it looks at its neighbours, then nudges its own 16 numbers.</li>
-    <li>Training: we wounded it thousands of times and rewarded it for looking like the target again.</li>
-    <li>Biology: salamanders regrow limbs; planarian worms regrow a whole body from a fragment.</li>
-    <li>Based on “Growing Neural Cellular Automata” (Mordvintsev et al., Distill 2020).</li>
-  </ul>
-  <h4>Keys</h4>
-  <div class="keys">
-    <kbd>S</kbd><span>Plant a seed</span>
-    <kbd>X</kbd><span>Cut in half</span>
-    <kbd>R</kbd><span>Random hole</span>
-    <kbd>Space</kbd><span>Pause / play</span>
-    <kbd>H</kbd><span>Hidden channels</span>
-  </div>
-</aside>
 
 <script type="module" src="app.js?v=4"></script>
 </body>
