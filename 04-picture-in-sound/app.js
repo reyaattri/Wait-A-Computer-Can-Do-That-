@@ -1,4 +1,5 @@
 import { $, $$, initShell, seg, toast, dropZone, download, fitCanvas } from "../shared/ui.js";
+const TOUCH = matchMedia("(pointer: coarse)").matches;   // phones and tablets: tap, not keys
 
 initShell();
 
@@ -72,7 +73,7 @@ dropZone($("#imgDrop"), async ([f]) => {
   await img.decode();
   S.image = img;
   refreshPicture();
-  toast("Picture loaded — press Play");
+  toast(`Picture loaded: ${TOUCH ? "tap" : "press"} Play`);
 }, "image/*");
 
 // ── Picture → brightness matrix ─────────────────────────────────────────────
@@ -531,6 +532,7 @@ ui.msg.addEventListener("input", refreshPicture);
 ui.vol.addEventListener("input", () => { syncLabels(); if (S.gain) S.gain.gain.setTargetAtTime(+ui.vol.value, S.ctx.currentTime, 0.02); });
 ui.floor.addEventListener("input", syncLabels);
 ui.reveal.addEventListener("change", () => setReveal(ui.reveal.checked));
+$("#previewWrap").addEventListener("click", () => setReveal(!S.revealed));   // tap the picture to show or hide it
 
 const togglePlay = () => (S.playing ? stop() : play());
 $("#playBtn").addEventListener("click", togglePlay);

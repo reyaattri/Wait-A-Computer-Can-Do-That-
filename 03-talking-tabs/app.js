@@ -1,4 +1,5 @@
 import { $, initShell, toast, fitCanvas } from "../shared/ui.js";
+const TOUCH = matchMedia("(pointer: coarse)").matches;   // phones and tablets: tap, not keys
 initShell();
 
 // ── Identity ───────────────────────────────────────────────────────────────
@@ -167,7 +168,8 @@ function spawn() {
   if (!win) toast("Popup blocked — allow popups for this site");
 }
 
-$("#spawnBtn").onclick = spawn; $("#spawnHero").onclick = spawn;
+const spawnTap = () => { spawn(); if (TOUCH) setTimeout(() => toast("New tab open. Flip back and forth to watch them talk", 3200), 300); };
+$("#spawnBtn").onclick = spawnTap; $("#spawnHero").onclick = spawnTap;
 $("#flashBtn").onclick = () => { send({ t: "flash" }); flash(color(me.hue)); };
 $("#titleBtn").onclick = () => {
   titleIdx = (titleIdx + 1) % (TITLES.length + 1);

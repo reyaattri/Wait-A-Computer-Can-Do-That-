@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ZIP Inside a Cat</title>
 <script src="../shared/guest.js?v=2"></script>
-<link rel="stylesheet" href="../shared/style.css?v=8">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="../shared/style.css?v=9">
+<link rel="stylesheet" href="style.css?v=7">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='18' r='12' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5'/><path d='M6 12 7 3l7 5M26 12l-1-9-7 5' fill='%238B5CF6' stroke='%231E293B' stroke-width='2.5' stroke-linejoin='round'/></svg>">
 </head>
 <body>
@@ -55,7 +55,7 @@
       <section class="card">
         <h3><span class="step">1</span>The cat</h3>
         <div class="row">
-          <div class="drop grow" id="catDrop"><strong>Drop a photo</strong><br>.jpg or .png</div>
+          <div class="drop grow" id="catDrop"><strong class="on-mouse">Drop a photo</strong><strong class="on-touch">Tap to pick a photo</strong><br>.jpg or .png</div>
         </div>
         <button class="btn block" id="defaultCat" style="margin-top:10px">Use the cartoon cat</button>
       </section>
@@ -63,7 +63,7 @@
       <section class="card">
         <h3><span class="step">2</span>Secret files <span class="muted" id="secretCount"></span></h3>
         <div class="secrets" id="secrets"></div>
-        <div class="drop" id="secretDrop" style="margin-top:10px"><strong>Drop files to hide</strong><br>anything: pdf, mp3, code…</div>
+        <div class="drop" id="secretDrop" style="margin-top:10px"><strong class="on-mouse">Drop files to hide</strong><strong class="on-touch">Tap to pick files to hide</strong><br>anything: pdf, mp3, code…</div>
       </section>
 
       <section class="card">
@@ -80,13 +80,13 @@
 
       <section class="card">
         <h3><span class="step">4</span>Check any file</h3>
-        <div class="drop" id="inspectDrop"><strong>Drop a file</strong><br>find out if something's hiding in it</div>
+        <div class="drop" id="inspectDrop"><strong class="on-mouse">Drop a file</strong><strong class="on-touch">Tap to pick a file</strong><br>find out if something's hiding in it</div>
       </section>
     </aside>
   </div>
 </div>
 
 
-<script type="module" src="app.js?v=1"></script>
+<script type="module" src="app.js?v=2"></script>
 </body>
 </html>

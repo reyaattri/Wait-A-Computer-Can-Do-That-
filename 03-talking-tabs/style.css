@@ -1,6 +1,7 @@
 :root { --session: var(--pink); }
 
-#cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+#cv { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
+.eh-note { margin: -6px auto 12px; max-width: 26ch; font-size: 14px; color: var(--ink-2); line-height: 1.45; }
 
 .me-badge {
   position: absolute; left: 22px; top: 18px; z-index: 3; display: flex; align-items: center; gap: 12px;
@@ -59,3 +60,9 @@ body.flash .stage::after {
   content: ""; position: absolute; inset: 0; background: var(--flash, var(--amber)); z-index: 5; animation: flash .7s forwards; pointer-events: none;
 }
 @keyframes flash { from { opacity: .9; } to { opacity: 0; } }
+
+/* phones: lift the 'all alone' prompt so its button clears the chat bar */
+@media (pointer: coarse) {
+  .empty-hint { transform: translate(-50%, 92px); }
+  .empty-hint.gone { transform: translate(-50%, 110px) scale(.9); }
+}

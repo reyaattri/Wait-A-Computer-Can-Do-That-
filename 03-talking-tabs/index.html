@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Talking Tabs</title>
 <script src="../shared/guest.js?v=2"></script>
-<link rel="stylesheet" href="../shared/style.css?v=8">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="../shared/style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <link rel="icon" id="favicon" href="data:,">
 </head>
 <body>
@@ -27,7 +27,7 @@
       <div class="count" id="count"><b>1</b><span>tab online</span></div>
       <div class="empty-hint" id="emptyHint">
         <div class="eh-title">I'm all alone in here.</div>
-        <button class="btn primary lg" id="spawnHero"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>Open a new window</button>
+        <button class="btn primary lg" id="spawnHero"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="on-mouse">Open a new window</span><span class="on-touch">Open a new tab</span></button>
       </div>
       <form class="chatbar" id="chatForm" autocomplete="off">
         <input type="text" id="chatIn" placeholder="Say something to the other tabs…" maxlength="80">
@@ -44,7 +44,7 @@
       <section class="card">
         <h3>Do something together</h3>
         <div class="stack">
-          <button class="btn block" id="spawnBtn">Open another window</button>
+          <button class="btn block" id="spawnBtn"><span class="on-mouse">Open another window</span><span class="on-touch">Open another tab</span></button>
           <button class="btn block" id="ballBtn">Throw the ball</button>
           <button class="btn block" id="flashBtn">Flash every tab</button>
           <button class="btn block" id="titleBtn">Hijack tab titles</button>
@@ -61,6 +61,6 @@
 </div>
 
 
-<script type="module" src="app.js?v=5"></script>
+<script type="module" src="app.js?v=6"></script>
 </body>
 </html>

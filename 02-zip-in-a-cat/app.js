@@ -1,4 +1,5 @@
 import { $, initShell, toast, dropZone, download, bytes as fmtBytes } from "../shared/ui.js";
+const TOUCH = matchMedia("(pointer: coarse)").matches;   // phones and tablets: tap, not keys
 initShell();
 
 const enc = new TextEncoder(), dec = new TextDecoder();
@@ -260,7 +261,7 @@ $("#defaultCat").onclick = async () => { S.cat = await defaultCat(); S.catName =
 
 dropZone($("#secretDrop"), async (files) => {
   for (const f of files) S.secrets.push({ name: f.name, bytes: new Uint8Array(await f.arrayBuffer()) });
-  renderSecrets(); toast(`${files.length} file${files.length > 1 ? "s" : ""} ready — press Hide`);
+  renderSecrets(); toast(`${files.length} file${files.length > 1 ? "s" : ""} ready: ${TOUCH ? "tap" : "press"} Hide`);
 });
 
 dropZone($("#inspectDrop"), async ([f]) => {

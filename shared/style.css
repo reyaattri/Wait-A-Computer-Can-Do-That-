@@ -304,3 +304,10 @@ html.guest-locked body > .app { filter: blur(6px); pointer-events: none; }
 .lock-card a { text-decoration: none; }
 .lock-badge { width: 56px; height: 56px; margin: 0 auto; border-radius: 50%; display: grid; place-items: center; background: var(--amber); border: var(--bw) solid var(--ink); }
 .lock-badge svg { width: 26px; height: 26px; }
+
+/* ── Words that depend on the device: "click" on a laptop, "tap" on a phone ─ */
+.on-touch { display: none; }
+@media (pointer: coarse) {
+  .on-touch { display: revert; }
+  .on-mouse { display: none !important; }
+}

@@ -65,5 +65,6 @@ body.mic .live-pill { background: var(--pink); }
   color: var(--white); letter-spacing: .04em; transition: opacity .3s; pointer-events: none;
 }
 .preview:not(.spoiler) .spoiler-tag { opacity: 0; }
+.preview { cursor: pointer; }
 
 .btn.rec { background: var(--pink); }
